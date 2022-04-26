@@ -11,21 +11,39 @@ let teamMembers = [];
 const questions = [
     {
         type: 'rawlist',
-        message: 'Choose the next step :',
+        message: 'Choose the next step: ',
         choices: ['Add an engineer', 'Add an intern', 'Exit'],
         name: 'next',
     },
     {
         type: 'input',
-        Message: 'What is github?',
+        message: `Enter the name: `,
+        name: 'name',
+        when: (answer) => answer.next !== 'Exit',
+    },
+    {
+        type: 'input',
+        message: `Enter the employee ID: `,
+        name: 'id',
+        when: (answer) => answer.next !== 'Exit',
+    },
+    {
+        type: 'input',
+        message: `Enter the email address: `,
+        name: 'email',
+        when: (answer) => answer.next !== 'Exit',
+    },
+    {
+        type: 'input',
+        Message: 'Enter the GitHub username?',
         name: 'github',
-        when: (answer) => answer.next === 'Add an engineer',
+        when: (answer) => answer.next === 'Add an engineer' && answer.next !== 'Exit',
     },
     {
         type: 'input',
         Message: 'What is school?',
         name: 'school',
-        when: (answer) => answer.next === 'Add an intern',
+        when: (answer) => answer.next === 'Add an intern' && answer.next !== 'Exit',
     },
 ];
 
@@ -34,22 +52,22 @@ Inquirer
     .prompt([
         {
             type: 'input',
-            message: `What is the manager's name?`,
+            message: `Enter the manager's name: `,
             name: 'name',
         },
         {
             type: 'input',
-            message: `What is the employee ID?`,
+            message: `Enter the manager's employee ID: `,
             name: 'id',
         },
         {
             type: 'input',
-            message: `What is the email address?`,
+            message: `Enter the manager's email address: `,
             name: 'email',
         },
         {
             type: 'input',
-            message: `What is the office number?`,
+            message: `Enter the manager's office number: `,
             name: 'officeNumber',
         },
     ])
@@ -58,25 +76,13 @@ Inquirer
         const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
         teamMembers.push(manager);
 
-        loopQuestion(response);
-        // Inquirer
-        //     .prompt([
-        //         {
-        //             type: 'rawlist',
-        //             message: 'Choose the next step :',
-        //             choices: ['Add an engineer', 'Add an intern', 'Exit'],
-        //             name: 'next'
-        //         }
-        //     ])
-        //     .then((data) => {
-        //         loopQuestion(data);
-        //     })
-        //     .catch();
+        loopQuestion("Next");
     })
     .catch();
 
-function loopQuestion(data) {
-    if(data.next === "Exit") {
+function loopQuestion(next) {
+    console.log(next);
+    if(next === 'Exit') {
         console.log('Exit!!!!!');
         console.log(teamMembers);
         // Create html file and return
@@ -87,13 +93,14 @@ function loopQuestion(data) {
             .prompt(questions)
             .then((answer) => {
                 if(answer.next === 'Add an engineer') {
-                    var member = new Engineer(answer.name, answer.id, answer.email, answer.github);
+                    const member = new Engineer(answer.name, answer.id, answer.email, answer.github);
+                    teamMembers.push(member);
                 }
                 else if(answer.next === 'Add an intern') {
-                    var member = new Intern(answer.name, answer.id, answer.email, answer.github);
+                    const member = new Intern(answer.name, answer.id, answer.email, answer.school);
+                    teamMembers.push(member);
                 }
-                teamMembers.push(member);
-                loopQuestion(answer);
+                loopQuestion(answer.next);
             })
             .catch();
         }
