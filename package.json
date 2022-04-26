@@ -1,0 +1,23 @@
+{
+  "name": "team_profile_generator",
+  "version": "1.0.0",
+  "description": "It generates an HTML webpage that displays team's basic info which were entered by a user",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonjong2/Team_Profile_Generator.git"
+  },
+  "author": "wonjong2",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wonjong2/Team_Profile_Generator/issues"
+  },
+  "homepage": "https://github.com/wonjong2/Team_Profile_Generator#readme",
+  "dependencies": {
+    "jest": "^28.0.0",
+    "requirer": "^0.0.4"
+  }
+}
