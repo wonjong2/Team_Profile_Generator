@@ -19,31 +19,36 @@ const questions = [
         type: 'input',
         message: `Enter the name: `,
         name: 'name',
+        // Ask this question when a user doesn't choose 'Exit'
         when: (answer) => answer.next !== 'Exit',
     },
     {
         type: 'input',
         message: `Enter the employee ID: `,
         name: 'id',
+        // Ask this question when a user doesn't choose 'Exit'
         when: (answer) => answer.next !== 'Exit',
     },
     {
         type: 'input',
         message: `Enter the email address: `,
         name: 'email',
+        // Ask this question when a user doesn't choose 'Exit'
         when: (answer) => answer.next !== 'Exit',
     },
     {
         type: 'input',
         Message: 'Enter the GitHub username?',
         name: 'github',
-        when: (answer) => answer.next === 'Add an engineer' && answer.next !== 'Exit',
+        // Ask this question when a user chooses 'Add an engineer'
+        when: (answer) => answer.next === 'Add an engineer',
     },
     {
         type: 'input',
         Message: 'What is school?',
         name: 'school',
-        when: (answer) => answer.next === 'Add an intern' && answer.next !== 'Exit',
+        // Ask this question when a user chooses 'Add an intern'
+        when: (answer) => answer.next === 'Add an intern',
     },
 ];
 
@@ -76,30 +81,31 @@ Inquirer
         const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
         teamMembers.push(manager);
 
+        // Call loopQuestion function for iteration
         loopQuestion("Next");
     })
     .catch();
 
 function loopQuestion(next) {
-    console.log(next);
     if(next === 'Exit') {
-        console.log('Exit!!!!!');
         console.log(teamMembers);
         // Create html file and return
     }
     else {
-        console.log('NEXT STEP');
         Inquirer
             .prompt(questions)
             .then((answer) => {
                 if(answer.next === 'Add an engineer') {
+                    // Add an engineer's information to the lists
                     const member = new Engineer(answer.name, answer.id, answer.email, answer.github);
                     teamMembers.push(member);
                 }
                 else if(answer.next === 'Add an intern') {
+                    // Add an intern's information to the lists
                     const member = new Intern(answer.name, answer.id, answer.email, answer.school);
                     teamMembers.push(member);
                 }
+                // Call loopQuestion function for iteration
                 loopQuestion(answer.next);
             })
             .catch();
