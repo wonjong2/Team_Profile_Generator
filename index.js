@@ -1,8 +1,8 @@
 const Inquirer = require('Inquirer');
-const fs = require('fs');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+const Html = require('./src/html');
 
 // Array for the list of team members
 let teamMembers = [];
@@ -90,6 +90,8 @@ function loopQuestion(next) {
     if(next === 'Exit') {
         console.log(teamMembers);
         // Create html file and return
+        Html.createFile(teamMembers);
+        return;
     }
     else {
         Inquirer
