@@ -38,7 +38,7 @@ const questions = [
     },
     {
         type: 'input',
-        Message: 'Enter the GitHub username?',
+        message: 'Enter the GitHub username: ',
         name: 'github',
         // Ask this question when a user chooses 'Add an engineer'
         when: (answer) => answer.next === 'Add an engineer',
