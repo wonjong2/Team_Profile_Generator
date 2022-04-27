@@ -2,6 +2,7 @@ const Engineer = require('../lib/engineer');
 const Intern = require('../lib/intern');
 const fs = require('fs');
 
+// Fixed parts of the html file
 const content1 = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,9 +30,10 @@ const content3 = `    </div>
 
 
 const createFile = (list) => {
-    console.log(list);
     let profileCard = ``;
+    // Call generateProfileCard() to have Card elements
     profileCard = generateProfileCard(list);
+    // Create index.html file
     fs.writeFile('./dist/index.html', generateFullContents(profileCard), (error) => error ? console.error(error) : console.log("Success"));
     return
 }
@@ -41,11 +43,13 @@ function generateFullContents(content2) {
 }
 
 function generateProfileCard(list) {
-    let engineerList = list.filter((value) => value instanceof Engineer);
-    let internList = list.filter((value) => value instanceof Intern);
+    // Re-arrange by order of Engineer -> Intern
+    let memberList = list.filter((value) => value instanceof Engineer);
+    memberList = memberList.concat(list.filter((value) => value instanceof Intern));
 
     let cards = ``;
 
+    // Generate Manager Card
     cards += `
         <div class="card p-0 m-2" style="width: 18rem; border:1px rgb(54, 53, 53) solid;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(43, 74, 230);color:white"> 
@@ -60,38 +64,41 @@ function generateProfileCard(list) {
         </div>
 
 `;
-     
-    engineerList.forEach((value) => 
+    // Generate Engnieenr and Intern Cards
+    memberList.forEach((element) => {
         cards += `        <div class="card p-0 m-2" style="width: 18rem; border:1px rgb(54, 53, 53) solid;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-            <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(252, 138, 35);color:white"> 
-                <p style="margin-top:0.3rem;margin-bottom:0.5rem;">${value.getName()}</p>
-                <p style="margin-bottom:0.5rem">${value.getRole()}</p>
+        `
+        if(element.getRole() === 'Engineer') {
+            cards += `    <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(252, 138, 35);color:white">
+            `;
+        }
+        else {
+            cards += `    <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(34, 242, 139);color:white">
+            `;
+        } 
+        cards += `    <p style="margin-top:0.3rem;margin-bottom:0.5rem;">${element.getName()}</p>
+                <p style="margin-bottom:0.5rem">${element.getRole()}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${value.getId()}</li>
-                <li class="list-group-item">Email: <a href="mailto:${value.getEmail()}">${value.getEmail()}</a></li>
-                <li class="list-group-item">GitHub: <a href="https://github.com/${value.getGithub()}" target="_blank">${value.getGithub()}</a></li>
+                <li class="list-group-item">ID: ${element.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${element.getEmail()}">${element.getEmail()}</a></li>
+`
+        if(element.getRole() === 'Engineer') {
+            cards += `                <li class="list-group-item">GitHub: <a href="https://github.com/${element.getGithub()}" target="_blank">${element.getGithub()}</a></li>
             </ul>
         </div>
 
-`
-    );
-
-    internList.forEach((value) => 
-        cards += `        <div class="card p-0 m-2" style="width: 18rem; border:1px rgb(54, 53, 53) solid;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-            <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(34, 242, 139);color:white"> 
-                <p style="margin-top:0.3rem;margin-bottom:0.5rem;">${value.getName()}</p>
-                <p style="margin-bottom:0.5rem">${value.getRole()}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${value.getId()}</li>
-                <li class="list-group-item">Email: <a href="mailto:${value.getEmail()}">${value.getEmail()}</a></li>
-                <li class="list-group-item">School: ${value.getSchool()}</li>
+`;
+        }
+        else {
+            cards += `                <li class="list-group-item">School: ${element.getSchool()}</li>
             </ul>
         </div>
 
-`
-    );
+`;
+        }
+
+    })
 
     return cards;
 }
