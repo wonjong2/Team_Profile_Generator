@@ -2,7 +2,7 @@ const Employee = require('../lib/employee');
 
 describe('Employee', () => {
     describe('initialize', () => {
-        it(`should create an object with 'Park' in name, '1' in id, 'park@gmail.com' in email`, () => {
+        it(`should create an object with 'Park' for name, '1' for id, 'park@gmail.com' for email`, () => {
             const employee = new Employee('Park', 1, 'park@gmail.com');
             expect(employee).toEqual({name: 'Park', id: 1, email: 'park@gmail.com'});
         });
