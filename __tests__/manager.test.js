@@ -32,7 +32,7 @@ describe("Manager", () => {
         });
     });
     describe('getRole', () => {
-        it(`should return 'Employee'`, () => {
+        it(`should return 'Manager'`, () => {
             const manager = new Manager('Choi', 6, 'choi@gmail.com', 654);
             expect(manager.getRole()).toEqual('Manager');
         });
