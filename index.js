@@ -7,51 +7,6 @@ const Html = require('./src/html');
 // Array for the list of team members
 let teamMembers = [];
 
-// Question objects for an engineer and an intern
-const questions = [
-    {
-        type: 'rawlist',
-        message: 'Choose the next step: ',
-        choices: ['Add an engineer', 'Add an intern', 'Exit'],
-        name: 'next',
-    },
-    {
-        type: 'input',
-        message: `Enter the name: `,
-        name: 'name',
-        // Ask this question when a user doesn't choose 'Exit'
-        when: (answer) => answer.next !== 'Exit',
-    },
-    {
-        type: 'input',
-        message: `Enter the employee ID: `,
-        name: 'id',
-        // Ask this question when a user doesn't choose 'Exit'
-        when: (answer) => answer.next !== 'Exit',
-    },
-    {
-        type: 'input',
-        message: `Enter the email address: `,
-        name: 'email',
-        // Ask this question when a user doesn't choose 'Exit'
-        when: (answer) => answer.next !== 'Exit',
-    },
-    {
-        type: 'input',
-        message: 'Enter the GitHub username: ',
-        name: 'github',
-        // Ask this question when a user chooses 'Add an engineer'
-        when: (answer) => answer.next === 'Add an engineer',
-    },
-    {
-        type: 'input',
-        Message: 'What is school?',
-        name: 'school',
-        // Ask this question when a user chooses 'Add an intern'
-        when: (answer) => answer.next === 'Add an intern',
-    },
-];
-
 // Application starts with asking manager's information
 Inquirer
     .prompt([
@@ -76,39 +31,74 @@ Inquirer
             name: 'officeNumber',
         },
     ])
-    .then((response) => {
+    .then((answer) => {
         // Add the manager's information to the lists
-        const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
+        const manager = new Manager(answer);
         teamMembers.push(manager);
 
         // Call loopQuestion function for iteration
-        loopQuestion("Next");
+        loopQuestion('Next');
     })
     .catch();
 
 function loopQuestion(next) {
     if(next === 'Exit') {
         console.log(teamMembers);
-        // Create html file and return
         Html.createFile(teamMembers);
         return;
     }
     else {
         Inquirer
-            .prompt(questions)
-            .then((answer) => {
-                if(answer.next === 'Add an engineer') {
+            .prompt([
+                {
+                    type: 'rawlist',
+                    message: 'Choose the next step: ',
+                    choices: ['Add an engineer', 'Add an intern', 'Exit'],
+                    name: 'next',
+                },
+                {
+                    type: 'input',
+                    message: `Enter the name: `,
+                    name: 'name',
+                    when: (answer) => answer.next !== 'Exit',
+                },
+                {
+                    type: 'input',
+                    message: `Enter the employee ID: `,
+                    name: 'id',
+                    when: (answer) => answer.next !== 'Exit',
+                },
+                {
+                    type: 'input',
+                    message: `Enter the email address: `,
+                    name: 'email',
+                    when: (answer) => answer.next !== 'Exit',
+                },
+                {
+                    type: 'input',
+                    message: 'Enter the GitHub username: ',
+                    name: 'github',
+                    when: (answer) => answer.next === 'Add an engineer',
+                },
+                {
+                    type: 'input',
+                    Message: 'What is school?',
+                    name: 'school',
+                    when: (answer) => answer.next === 'Add an intern',
+                },
+            ])
+            .then(({next, ...employeeData}) => {
+                if(next === 'Add an engineer') {
                     // Add an engineer's information to the lists
-                    const member = new Engineer(answer.name, answer.id, answer.email, answer.github);
+                    const member = new Engineer(employeeData);
                     teamMembers.push(member);
                 }
-                else if(answer.next === 'Add an intern') {
+                else if(next === 'Add an intern') {
                     // Add an intern's information to the lists
-                    const member = new Intern(answer.name, answer.id, answer.email, answer.school);
+                    const member = new Intern(employeeData);
                     teamMembers.push(member);
                 }
-                // Call loopQuestion function for iteration
-                loopQuestion(answer.next);
+                loopQuestion(next);
             })
             .catch();
         }
