@@ -59,7 +59,7 @@ function generateProfileCard(list) {
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID: ${list[0].getId()}</li>
                 <li class="list-group-item">Email: <a href="mailto:${list[0].getEmail()}">${list[0].getEmail()}</a></li>
-                <li class="list-group-item">Office number: ${list[0].officeNumber}</li>
+                <li class="list-group-item">Office number: ${list[0].getOfficeNumber()}</li>
             </ul>
         </div>
 

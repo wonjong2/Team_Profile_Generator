@@ -25,9 +25,15 @@ describe("Manager", () => {
             expect(manager.getEmail()).toEqual('hong@gmail.com');
         });
     });
+    describe('getOfficeNumber', () => {
+        it(`should return 'hong@gmail.com'`, () => {
+            const manager = new Manager('Han', 5, 'han@gmail.com', 555);
+            expect(manager.getOfficeNumber()).toEqual(555);
+        });
+    });
     describe('getRole', () => {
         it(`should return 'Employee'`, () => {
-            const manager = new Manager('Choi', 5, 'choi@gmail.com', 555);
+            const manager = new Manager('Choi', 6, 'choi@gmail.com', 654);
             expect(manager.getRole()).toEqual('Manager');
         });
     });    
