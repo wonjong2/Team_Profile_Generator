@@ -14,21 +14,37 @@ Inquirer
             type: 'input',
             message: `Enter the manager's name: `,
             name: 'name',
+            validate(name) {
+                return name.length > 0 ? true : `Empty name! Please enter the manager's name`
+            }
         },
         {
             type: 'input',
             message: `Enter the manager's employee ID: `,
             name: 'id',
+            validate(id) {
+                return id.length > 0 ? true : `Empty ID! Please enter the manager's emaployee ID`
+            }
         },
         {
             type: 'input',
             message: `Enter the manager's email address: `,
             name: 'email',
+            validate(email) {
+                const pass = email.match(/\S+@\S+\.\S+/);
+                if(pass) {
+                    return true;
+                }
+                return `Please enter manager's email address with valid format`
+            }
         },
         {
             type: 'input',
             message: `Enter the manager's office number: `,
             name: 'officeNumber',
+            validate(officeNumber) {
+                return officeNumber.length > 0 ? true : `Empty office number! Please enter the manager's office number`
+            }
         },
     ])
     .then((answer) => {
@@ -63,30 +79,49 @@ function loopQuestion(next) {
                     message: `Enter the name: `,
                     name: 'name',
                     when: (answer) => answer.next !== 'Exit',
+                    validate(name) {
+                        return name.length > 0 ? true : `Empty name! Please enter the name`
+                    }
                 },
                 {
                     type: 'input',
                     message: `Enter the employee ID: `,
                     name: 'id',
                     when: (answer) => answer.next !== 'Exit',
+                    validate(id) {
+                        return id.length > 0 ? true : `Empty ID! Please enter the employee ID`
+                    }
                 },
                 {
                     type: 'input',
                     message: `Enter the email address: `,
                     name: 'email',
                     when: (answer) => answer.next !== 'Exit',
+                    validate(email) {
+                        const pass = email.match(/\S+@\S+\.\S+/);
+                        if(pass) {
+                            return true;
+                        }
+                        return `Please enter manager's email address with valid format`
+                    }
                 },
                 {
                     type: 'input',
                     message: 'Enter the GitHub username: ',
                     name: 'github',
                     when: (answer) => answer.next === 'Add an engineer',
+                    validate(github) {
+                        return github.length > 0 ? true : `Empty GitHub username! Please enter the GitHub username`
+                    }
                 },
                 {
                     type: 'input',
-                    Message: 'What is school?',
+                    Message: `Enter the intern's school?`,
                     name: 'school',
                     when: (answer) => answer.next === 'Add an intern',
+                    validate(school) {
+                        return school.length > 0 ? true : `Empty school! Please enter the intern's school`
+                    }
                 },
             ])
             .then(({next, ...employeeData}) => {
