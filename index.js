@@ -39,7 +39,9 @@ Inquirer
         // Call loopQuestion function for iteration
         loopQuestion('Next');
     })
-    .catch();
+    .catch(err => 
+        console.log(err)
+    );
 
 function loopQuestion(next) {
     if(next === 'Exit') {
@@ -100,6 +102,8 @@ function loopQuestion(next) {
                 }
                 loopQuestion(next);
             })
-            .catch();
+            .catch(err => 
+                console.log(err)
+            );
         }
 }
