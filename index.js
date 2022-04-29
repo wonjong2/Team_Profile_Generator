@@ -39,7 +39,6 @@ Inquirer
             message: `Enter the manager's office number: `,
             name: 'officeNumber',
             validate(officeNumber) {
-                console.log(officeNumber)
                 return officeNumber.match(/[0-9]+/) ? true : `Invalid format! Please enter the manager's office number`
             }
         },

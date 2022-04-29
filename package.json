@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/wonjong2/Team_Profile_Generator#readme",
   "dependencies": {
-    "inquirer": "^8.2.2",
+    "inquirer": "^8.2.4",
     "jest": "^28.0.0",
     "requirer": "^0.0.4"
   }
