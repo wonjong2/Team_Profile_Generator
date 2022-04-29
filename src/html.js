@@ -10,8 +10,8 @@ const content1 = `<!DOCTYPE html>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Profile</title>
-    <!-- Link to the css file for bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/bf90341634.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav class="navbar bg-primary">
@@ -23,7 +23,6 @@ const content1 = `<!DOCTYPE html>
     <div class="container row justify-content-center" style="margin-left:auto; margin-right:auto; padding-top:3rem;">`;
 
 const content3 = `    </div>
-<!-- Link to bootstrap script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>`;
@@ -54,7 +53,7 @@ function generateProfileCard(list) {
         <div class="card p-0 m-2" style="width: 18rem; border:1px rgb(54, 53, 53) solid;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(43, 74, 230);color:white"> 
                 <p style="margin-top:0.3rem;margin-bottom:0.5rem;">${list[0].getName()}</p>
-                <p style="margin-bottom:0.5rem">${list[0].getRole()}</p>
+                <p style="margin-bottom:0.5rem"><i class="fa-solid fa-crown"></i> ${list[0].getRole()}</p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID: ${list[0].getId()}</li>
@@ -73,12 +72,20 @@ function generateProfileCard(list) {
             `;
         }
         else {
-            cards += `    <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(34, 242, 139);color:white">
+            cards += `    <div class="card-header" style="width:100%;font-weight:bolder;background-color:rgb(39, 180, 110);color:white">
             `;
         } 
         cards += `    <p style="margin-top:0.3rem;margin-bottom:0.5rem;">${element.getName()}</p>
-                <p style="margin-bottom:0.5rem">${element.getRole()}</p>
-            </div>
+`
+        if(element.getRole() === 'Engineer') {
+            cards +=`                <p style="margin-bottom:0.5rem"><i class="fa-solid fa-glasses"></i> ${element.getRole()}</p>
+`
+        }
+        else {
+            cards +=`                <p style="margin-bottom:0.5rem"><i class="fa-solid fa-user-graduate"></i> ${element.getRole()}</p>
+`
+        }
+        cards +=    `            </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID: ${element.getId()}</li>
                 <li class="list-group-item">Email: <a href="mailto:${element.getEmail()}">${element.getEmail()}</a></li>
