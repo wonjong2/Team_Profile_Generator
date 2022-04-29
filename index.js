@@ -37,6 +37,7 @@ Inquirer
         teamMembers.push(manager);
 
         // Call loopQuestion function for iteration
+        // loopQuestion function should be called at the end of .then()
         loopQuestion('Next');
     })
     .catch(err => 
@@ -45,7 +46,6 @@ Inquirer
 
 function loopQuestion(next) {
     if(next === 'Exit') {
-        console.log(teamMembers);
         Html.createFile(teamMembers);
         return;
     }
@@ -100,6 +100,7 @@ function loopQuestion(next) {
                     const member = new Intern(employeeData);
                     teamMembers.push(member);
                 }
+                // loopQuestion function should be called at the end of .then()
                 loopQuestion(next);
             })
             .catch(err => 
