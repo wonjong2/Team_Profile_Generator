@@ -31,11 +31,7 @@ Inquirer
             message: `Enter the manager's email address: `,
             name: 'email',
             validate(email) {
-                const pass = email.match(/\S+@\S+\.\S+/);
-                if(pass) {
-                    return true;
-                }
-                return `Please enter manager's email address with valid format`
+                return email.match(/\S+@\S+\.\S+/) ? true : `Please enter manager's email address with valid format`
             }
         },
         {
@@ -43,7 +39,8 @@ Inquirer
             message: `Enter the manager's office number: `,
             name: 'officeNumber',
             validate(officeNumber) {
-                return officeNumber.length > 0 ? true : `Empty office number! Please enter the manager's office number`
+                console.log(officeNumber)
+                return officeNumber.match(/[0-9]+/) ? true : `Invalid format! Please enter the manager's office number`
             }
         },
     ])
@@ -98,11 +95,7 @@ function loopQuestion(next) {
                     name: 'email',
                     when: (answer) => answer.next !== 'Exit',
                     validate(email) {
-                        const pass = email.match(/\S+@\S+\.\S+/);
-                        if(pass) {
-                            return true;
-                        }
-                        return `Please enter manager's email address with valid format`
+                        return email.match(/\S+@\S+\.\S+/) ? true : `Please enter manager's email address with valid format`
                     }
                 },
                 {
